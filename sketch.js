@@ -8,10 +8,12 @@ var holder,ball,ground;
 var stand1,stand2;
 var ball;
 var slingShot;
-var polygon, polygon_img;
+var polygon,polygon_img;
+
 function preload(){
   polygon_img=loadImage("polygon.png");
 }
+
 function setup() {
   createCanvas(900,400);
   engine = Engine.create();
@@ -20,9 +22,7 @@ function setup() {
   ground = new Ground();
   stand1 = new Stand(390,300,250,10);
   stand2 = new Stand(700,200,200,10);
-polygon= createSprite(100,200,20,20);
-polygon.addImage("p.img",polygon_img);
-polygon.scale= 0.1;
+
   //nivel uno
   block1 = new Block(300,275,30,40);
   console.log(block1);
@@ -44,7 +44,26 @@ polygon.scale= 0.1;
   block15 = new Block(420,195,30,40);
   //parte superior
   block16 = new Block(390,155,30,40);
-  slingShot = new SlingShot(polygon.body,{x:200, y:50});
+ // nivel 1.2
+ block17=new Block(640,175,30,40);
+ block18= new Block(670,175,30,40);
+ block19= new Block(700,175,30,40);
+ block20= new Block(730,175,30,40);
+ block23= new Block(760,175,30,40);
+ // nivel 2.2
+block21= new Block(670,135,30,40);
+block22= new Block(700,135,30,40);
+block24= new Block(730,135,30,40);
+// nivel 3.2
+block25= new Block(700,95,30,40);
+
+
+
+
+  
+  polygon = Bodies.circle(50,200,20);
+  World.add(world,polygon);
+  slingShot = new SlingShot(this.polygon,{x:100, y:200});
   
 
 }
@@ -61,7 +80,7 @@ function draw() {
   strokeWeight(2);
   stroke(15);
   fill("skyblue");
-  polygon.display();
+  
   block1.display();
   block2.display();
   block3.display();
@@ -81,14 +100,32 @@ function draw() {
   block15.display();
   fill("grey");
   block16.display();
+  block17.display();
+  block18.display();
+  block19.display();
+  block20.display();
+  block23.display();
+fill("red");
+block21.display();
+block22.display();
+block24.display();
+fill("blue")
+block25.display();
  slingShot.display();
+ fill("gold");
+  imageMode(CENTER)
+  image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
 
 }
 
 function mouseDragged(){
-  Matter.Body.setPosition(polygon.body, {x: mouseX , y: mouseY});
+  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
 }
-
 function mouseReleased(){
   slingShot.fly();
+}
+function keyPressed(){
+  if(keyCode === 32){
+      slingShot.attach(this.polygon);
+  }
 }
